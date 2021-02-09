@@ -111,3 +111,20 @@ application.run(args);
     - 스프링 부트에서 빈을 등 두번.
     - 컴포넌트 스캔으로 등록하는게 먼저다.
     - 두번째가 오토 컨피규레이션 (그래서 이게 덮어쓴다.)
+    
+### 자동 설정 구현 (@ConfigurationProperties)
+이전 수업에서 생긴 문제 (빈이 무시당하는) 문제 해결
+- 오토 컨피규레이션 빈을 컴포넌트 스캔으로 등록되지 않은 빈만 등록하도록 한다.
+- `@ConditionalOnMissingBean` 사용
+
+스프링부트 설정을 커스텀하는 것 ok. 그러나 장황하게 Bean 을 작성하고 싶지 않다.  
+- `resources` - `application.properties` 에 작성한다.
+> howLong을 캐멀케이스로 써도 되고, how-long 으로 써도 된다.
+- properties를 써서 변경할 수 있게 하려면, (모듈에서) 해당하는 것을 정의해줘야 한다. (HolomonProperties 클래스)
+
+#### 질문
+holoman(HolomanProperties properties)의 파라메터는 어디서 주입을 해 주는건가요?
+
+@EnableConfigurationProperties를 붙이면 빈으로 등록 되어 있는 HolomanProperties가 자동으로 주입되는가요
+- 네 맞습니다. @Bean으로 정의하는 메소드의 매개변수는 자동으로 스프링이 주입해 줍니다. 
+
