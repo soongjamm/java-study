@@ -27,10 +27,11 @@ application.run(args);
 `@ComponentScan` 은 `@Component` 어노테이션이 붙은 클래스들을 스캔해서 빈으로 등록한다.
 - 하위 패키지에 있는 클래스들만. (다른 패키지는 읽지 않음)
 - 자기 자신에 @Configuration 을 붙이면 마찬가지로 빈이 된다.
+
 `@EnableAutoConfiguration` 은 다음을 설정한다.
 - ~-autoconfigure 의존성 -> META-INF -> spring.factories 에서 확인할 수 있다. (키 값이 정의되어 있다.)
 - 키 값을 따라가서 확인해보면 마찬가지로 @Configuration 이 붙은 설정 클래스들이다.
-- Conditional로 시작하는 어노테이션이 많은데, 조건에 따라 설정이 달라진다.
+- Conditional 로 시작하는 어노테이션이 많은데, 조건에 따라 설정이 달라진다.
 
 정리
 - `@EnableAutoConfiguration` 하나로 `spring.factories` 에 있는 설정들이 조건에 따라 적용되어 빈들이 생성된다.
@@ -38,9 +39,10 @@ application.run(args);
   (서블릿 컨테이너에서 서블릿 애플리케이션 하나가 돌아가게 된다.)
 
 
-### 자동 설정 구현 1 (Starter와 AutoConfigure)
+### 자동 설정 구현 1 (Starter 와 AutoConfigure)
+필요한 것
 - Spring-Boot-**Autoconfigure** 모듈 : 자동 설정
-- Spring-Boot-**Starter** 모듈 : 필요한 의존성 정의
+- Spring-Boot-**Starter** 모듈 : 필요한 의존성 정의  
   자동설정도 스타터에 넣어서 하나만 만든다. (새로운 프로젝트 생성)
 
 #### pom.xml
@@ -55,7 +57,7 @@ application.run(args);
   (스프링 부트에 특화된 파일이 아니라, 스프링에 있는 여러 용도로 활용되는 것)
 - 그 안에 자동 설정파일 추가   
   추가한 키가 @EnableAutoConfiguration 에 의해 읽혀서 빈도 추가 될 것
-- 이 프로젝트를 빌드하고 인스톨해서 다른 프로젝트에서 사용할 수 있도록 해야한다.
+- 이 프로젝트를 빌드하고 인스톨해서 다른 프로젝트에서 사용할 수 있도록 해야한다.  
   `mvn install` : 프로젝트를 빌드해서 jar 파일 생성된 것을 다른 메이븐 프로젝트에서도 사용할 수 있또록 로컬 레포지토리에 설치한다.
 - 이제 사용하는 쪽에서 다음을 의존성 추가하면 된다.
 ```
@@ -81,6 +83,8 @@ application.run(args);
 - `resources` - `application.properties` 에 작성한다.
 > howLong을 캐멀케이스로 써도 되고, how-long 으로 써도 된다.
 - properties를 써서 변경할 수 있게 하려면, (모듈에서) 해당하는 것을 정의해줘야 한다. (HolomonProperties 클래스)
+
+<br>
 
 #### 질문
 holoman(HolomanProperties properties)의 파라메터는 어디서 주입을 해 주는건가요?
